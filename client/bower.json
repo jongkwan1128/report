@@ -1,0 +1,24 @@
+{
+  "name": "client",
+  "authors": [
+    "김종관 <jgkim@suprema.co.kr>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.9",
+    "jquery": "^3.3.1",
+    "angular-ui-router": "^1.0.15",
+    "restangular": "^1.6.1",
+    "bootstrap": "^4.0.0"
+  }
+}
