@@ -123,6 +123,7 @@ router.post('/signin', function (req, res, next) {
 			});
 		}
 
+
 		const userSession = new UserSession();
 		userSession.userId = user._id;
 		userSession.save((err, doc) => {
@@ -133,10 +134,18 @@ router.post('/signin', function (req, res, next) {
 				});
 			}
 
+
+
 			return res.send({
 				success: true,
 				message: 'Valid sign in.',
-				token: doc._id
+				token: doc._id,
+				user: {
+					id: user._id,
+					eNumber: user.eNumber,
+					name: user.name,
+					email: user.email
+				}
 			});
 		});
 	});
@@ -147,8 +156,7 @@ router.get('/verify', function (req, res, next) {
 	const { token } = query;
 
 	UserSession.find({
-		_id: token,
-		isDeleted: false
+		_id: token
 	}, (err, sessions) => {
 		if (err) {
 			return res.send({
@@ -175,26 +183,42 @@ router.get('/logout', function (req, res, next) {
 	const { query } = req;
 	const { token } = query;
 
-	UserSession.findOneAndUpdate({
-		_id: token,
-		isDeleted: false
-	}, {
-		$set: {
-			isDeleted: true
-		}
-	}, null, (err, session) => {
-		if (err) {
-			return res.send({
-				success: false,
-				message: 'Error: Server error.'
-			});
-		}
+    UserSession.remove({
+        _id: token,
+	}, (err, session) => {
+        if (err) {
+            return res.send({
+                success: false,
+                message: 'Error: Server error.'
+            });
+        }
 
-		return res.send({
-			success: true,
-			message: 'Good.'
-		});
-	});
+        return res.send({
+            success: true,
+            message: 'Good.'
+        });
+    });
+
+	// UserSession.findOneAndUpdate({
+	// 	_id: token,
+	// 	isDeleted: false
+	// }, {
+	// 	$set: {
+	// 		isDeleted: true
+	// 	}
+	// }, null, (err, session) => {
+	// 	if (err) {
+	// 		return res.send({
+	// 			success: false,
+	// 			message: 'Error: Server error.'
+	// 		});
+	// 	}
+    //
+	// 	return res.send({
+	// 		success: true,
+	// 		message: 'Good.'
+	// 	});
+	// });
 });
 
 module.exports = router;
