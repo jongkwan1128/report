@@ -6,6 +6,9 @@ angular.module('app').constant('routeName', {
     INDEX: 'index',
     SIGNIN: 'singin',
     LOGOUT: 'logout',
+    DEPARTMENT: 'department',
+    DEPARTMENT_LIST: 'department_list',
+    DEPARTMENT_DETAIL: 'department_detail',
     PROJECT: 'project',
     PROJECT_LIST: 'project_list',
     PROJECT_DETAIL: 'project_detail'
@@ -60,6 +63,29 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, route
         },
         controller: 'indexCtrl'
     });
+
+    $stateProvider
+        .state({
+            name: routeName.DEPARTMENT,
+            url: 'department',
+            abstract: true,
+            parent: routeName.INDEX,
+            template: '<div ui-view></div>'
+        })
+        .state({
+            name: routeName.DEPARTMENT_LIST,
+            url: '/list',
+            parent: routeName.DEPARTMENT,
+            templateUrl: 'modules/department/departmentList.html',
+            controller: 'departmentListCtrl'
+        })
+        .state({
+            name: routeName.DEPARTMENT_DETAIL,
+            url: '/detail',
+            parent: routeName.DEPARTMENT,
+            templateUrl: 'modules/department/departmentDetail.html',
+            controller: 'departmentDetailCtrl'
+        });
 
     $stateProvider
         .state({

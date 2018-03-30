@@ -2,6 +2,8 @@
  * Created by 김종관 on 2018-03-28.
  */
 angular.module('app').controller('indexCtrl', function ($scope, $state, $http, routeName, $sessionStorage) {
+    $scope.routeName = routeName;
+
 	if ($sessionStorage.user) {
 		$scope.user = $sessionStorage.user;
 	}
@@ -19,5 +21,5 @@ angular.module('app').controller('indexCtrl', function ($scope, $state, $http, r
 		}
 	};
 
-	$scope.routeName = routeName;
+
 });
