@@ -1,6 +1,6 @@
 project list
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" ng-if="!noData">
         <table class="table table-striped table-dark table-hover">
             <thead>
             <tr>
@@ -14,7 +14,7 @@ project list
             <tr ng-repeat="project in projectList track by $index" ng-click="moveDetail(project)">
                 <td>{{$index}}</td>
                 <td>{{project.name}}</td>
-                <td>{{project.descript}}</td>
+                <td>{{project.description}}</td>
                 <td>{{project.period}}</td>
             </tr>
             </tbody>
@@ -44,8 +44,17 @@ project list
                 <button type="button" class="btn btn-outline-success btn-lg">Success</button>
             </div>
         </div>
-
     </div>
 
+    <div class="col-md-12" ng-if="noData">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary" ui-sref="{{routeName.PROJECT_DETAIL}}">Go somewhere</a>
+            </div>
+        </div>
+
+    </div>
 
 </div>

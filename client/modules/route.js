@@ -77,7 +77,14 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, route
             url: '/list',
             parent: routeName.DEPARTMENT,
             templateUrl: 'modules/department/departmentList.html',
-            controller: 'departmentListCtrl'
+            controller: 'departmentListCtrl',
+            resolve: {
+                departmentList: function ($http) {
+                    $http.get('/department/list').then(function(d) {
+                        return d;
+                    })
+                }
+            }
         })
         .state({
             name: routeName.DEPARTMENT_DETAIL,
@@ -100,7 +107,14 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, route
             url: '/list',
             parent: routeName.PROJECT,
             templateUrl: 'modules/project/projectList.html',
-			controller: 'projectListCtrl'
+			controller: 'projectListCtrl',
+            resolve: {
+                projectList: function ($http) {
+                    $http.get('/project/list').then(function (d) {
+                        return d;
+                    });
+                }
+            }
         })
         .state({
             name: routeName.PROJECT_DETAIL,
