@@ -12,11 +12,11 @@ angular.module('app').controller('indexCtrl', function ($scope, $state, $http, r
 		let token;
 		if ($sessionStorage.token) {
 			token = $sessionStorage.token;
-            $http.get('/account/logout?token='+ token).then(function (d) {
+            $http.get('/logout?token='+ token).then(function (d) {
             	console.log(d);
             	delete $sessionStorage.token;
                 delete $sessionStorage.user;
-            	$state.go(routeName.SIGNIN);
+            	$state.go(routeName.LOGIN);
 			});
 		}
 	};

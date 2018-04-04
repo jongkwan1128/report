@@ -20,8 +20,13 @@ app.engine('html', require('ejs').renderFile);
 
 app.use('/', require('./server/static'));
 
-app.use('/account', require('./server/api/account/accountContoller'));
+app.use('/login', require('./server/api/login/loginCtrl'));
+app.use('/logout', require('./server/api/logout/logoutCtrl'));
+app.use('/user', require('./server/api/user/userCtrl'));
 
+app.use('/department', require('./server/api/department/departmentCtrl'));
+app.use('/team', require('./server/api/team/teamCtrl'));
+// app.use('/project', require('./server/api/project/projectCtrl'));
 
 
 app.listen(4000, function () {

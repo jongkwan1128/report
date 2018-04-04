@@ -3,9 +3,10 @@
  */
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
-	eNumber: {
+const UserSchema = new Schema({
+    eNum: {
 		type: Number,
 		default: ''
 	},
@@ -21,14 +22,18 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		default: ''
 	},
-	isDeleted: {
-		type: Boolean,
-		default: false
-	},
 	createdAt: {
 		type: Date,
 		default: Date.now()
-	}
+	},
+	team: {
+		type: Schema.Types.ObjectId, ref: 'Team'
+	},
+	projects: [
+		{
+			type: Schema.Types.ObjectId, ref: 'Project'
+		}
+	]
 });
 
 UserSchema.methods.generateHash = function (password) {

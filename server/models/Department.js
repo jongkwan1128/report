@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const DepartmentSchema = new mongoose.Schema({
+const DepartmentSchema = new Schema({
     depNum: {
         type: Number,
         default: ''

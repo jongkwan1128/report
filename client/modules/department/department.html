@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="row">
+        <div class="card bg-light" style="width: 100%; margin-top: 30px;">
+            <div class="card-body">
+                <form>
+                    <div class="form-row">
+                        <div class="col col-md-1">
+                            <input type="text" class="form-control" placeholder="" ng-model="department.depNum">
+                        </div>
+                        <div class="col col-md-4">
+                            <input type="text" class="form-control" placeholder="" ng-model="department.name">
+                        </div>
+                        <div class="col col-md-6">
+                            <input type="text" class="form-control" placeholder="" ng-model="department.description">
+                        </div>
+                        <div class="col col-md-1">
+                            <button type="button" class="form-control btn btn-outline-dark" ng-click="addDepartment()">+</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <hr style="width: 100%;">
+
+    <div class="row">
+        <div class="card bg-light" style="width: 100%;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <ul class="list-group list-group-flush" ng-repeat="item in departmentList track by $index">
+                <li class="list-group-item">
+                    <div class="row" ng-if="item.editable == undefined || item.editable == false">
+                        <div class="col col-md-1">
+                            {{item.depNum}}
+                        </div>
+                        <div class="col col-md-2">
+                            {{item.name}}
+                        </div>
+                        <div class="col col-md-4">
+                            {{item.description}}
+                        </div>
+                        <div class="col col-md-3">
+                            {{item.createdAt | date : 'yyyy-MM-dd HH:mm:ss'}}
+                        </div>
+                        <div class="col col-md-2 text-center">
+                            <button class="btn btn-outline-success btn-sm" ng-click="editDepartment($index)">Edit</button>
+                            <button class="btn btn-outline-danger btn-sm" ng-click="removeDepartment(item)">Remove</button>
+                        </div>
+                    </div>
+
+                    <form ng-if="item.editable == true">
+                        <div class="form-row" >
+                            <div class="col col-md-1">
+                                <input type="text" class="form-control" placeholder="" ng-model="item.depNum">
+                            </div>
+                            <div class="col col-md-2">
+                                <input type="text" class="form-control" placeholder="Name" ng-model="item.name">
+                            </div>
+                            <div class="col col-md-4">
+                                <input type="text" class="form-control" placeholder="Description" ng-model="item.description">
+                            </div>
+                            <div class="col col-md-3">
+                                <!--{{item.createdAt | date : 'yyyy-MM-dd HH:mm:ss'}}-->
+                                <input type="text" class="form-control" placeholder="Description" ng-model="item.createdAt | date: 'yyyy-MM-dd HH:mm:ss'" disabled>
+                                <!--<input type="datetime-local" class="form-control" placeholder="Description" ng-model="item.createdAt" disabled>-->
+                            </div>
+                            <div class="col col-md-2 text-center">
+                                <button type="button" class="btn btn-outline-info btn-sm" ng-click="updateDepartment(item)">Update</button>
+                                <button type="button" class="btn btn-outline-warning btn-sm" ng-click="cancelEditDepartment($index)">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

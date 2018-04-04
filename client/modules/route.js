@@ -4,14 +4,11 @@
 angular.module('app').constant('routeName', {
     BASE: 'base',
     INDEX: 'index',
-    SIGNIN: 'singin',
+    LOGIN: 'login',
     LOGOUT: 'logout',
+    USER: 'user',
     DEPARTMENT: 'department',
-    DEPARTMENT_LIST: 'department_list',
-    DEPARTMENT_DETAIL: 'department_detail',
-    PROJECT: 'project',
-    PROJECT_LIST: 'project_list',
-    PROJECT_DETAIL: 'project_detail'
+    TEAM: 'team'
 });
 
 angular.module('app').config(function ($stateProvider, $urlRouterProvider, routeName) {
@@ -23,31 +20,21 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, route
             if ($sessionStorage.token) {
                 $state.go(routeName.INDEX);
             } else {
-                $state.go(routeName.SIGNIN);
+                $state.go(routeName.LOGIN);
             }
         }
     });
 
     $stateProvider.state({
-        name: routeName.SIGNIN,
+        name: routeName.LOGIN,
         url: '/login',
         parent: routeName.BASE,
-        templateUrl: 'modules/account/account.html',
-        controller: 'accountCtrl',
+        templateUrl: 'modules/login/login.html',
+        controller: 'loginCtrl',
         resolve: {
             routeName: function (routeName) {
                 return routeName;
             }
-        }
-    });
-
-    $stateProvider.state({
-        name: routeName.LOGOUT,
-        url: '/logout',
-        parent: routeName.BASE,
-        template: '<div>logout</div>',
-        controller: function () {
-
         }
     });
 
@@ -64,65 +51,65 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, route
         controller: 'indexCtrl'
     });
 
-    $stateProvider
-        .state({
-            name: routeName.DEPARTMENT,
-            url: 'department',
-            abstract: true,
-            parent: routeName.INDEX,
-            template: '<div ui-view></div>'
-        })
-        .state({
-            name: routeName.DEPARTMENT_LIST,
-            url: '/list',
-            parent: routeName.DEPARTMENT,
-            templateUrl: 'modules/department/departmentList.html',
-            controller: 'departmentListCtrl',
-            resolve: {
-                departmentList: function ($http) {
-                    $http.get('/department/list').then(function(d) {
-                        return d;
-                    })
-                }
+    $stateProvider.state({
+        name: routeName.USER,
+        url: 'user',
+        parent: routeName.INDEX,
+        templateUrl: 'modules/user/user.html',
+        resolve: {
+            routeName: function (routeName) {
+                return routeName;
             }
-        })
-        .state({
-            name: routeName.DEPARTMENT_DETAIL,
-            url: '/detail',
-            parent: routeName.DEPARTMENT,
-            templateUrl: 'modules/department/departmentDetail.html',
-            controller: 'departmentDetailCtrl'
-        });
+        },
+        controller: 'userCtrl'
+    });
 
-    $stateProvider
-        .state({
-            name: routeName.PROJECT,
-            url: 'project',
-            abstract: true,
-            parent: routeName.INDEX,
-            template: '<div ui-view></div>'
-        })
-        .state({
-            name: routeName.PROJECT_LIST,
-            url: '/list',
-            parent: routeName.PROJECT,
-            templateUrl: 'modules/project/projectList.html',
-			controller: 'projectListCtrl',
-            resolve: {
-                projectList: function ($http) {
-                    $http.get('/project/list').then(function (d) {
-                        return d;
-                    });
-                }
+    $stateProvider.state({
+        name: routeName.DEPARTMENT,
+        url: 'department',
+        parent: routeName.INDEX,
+        templateUrl: 'modules/department/department.html',
+        resolve: {
+            departmentList: function ($q, $http) {
+                let defer = $q.defer();
+                $http.get('/department/list').then(function (d) {
+                    defer.resolve(d.data.departmentList);
+                }, function (e) {
+                    defer.reject(e);
+                });
+                return defer.promise;
             }
-        })
-        .state({
-            name: routeName.PROJECT_DETAIL,
-            url: '/detail',
-            parent: routeName.PROJECT,
-            templateUrl: 'modules/project/projectDetail.html',
-            controller: 'projectDetailCtrl'
-        });
+        },
+        controller: 'departmentCtrl'
+    });
+
+    $stateProvider.state({
+        name: routeName.TEAM,
+        url: 'team',
+        parent: routeName.INDEX,
+        templateUrl: 'modules/team/team.html',
+        resolve: {
+            departmentList: function ($q, $http) {
+                let defer = $q.defer();
+                $http.get('/department/list').then(function (d) {
+                    defer.resolve(d.data.departmentList);
+                }, function (e) {
+                    defer.reject(e);
+                });
+                return defer.promise;
+            },
+            teamList: function ($q, $http) {
+                let defer = $q.defer();
+                $http.get('/team/list').then(function (d) {
+                    defer.resolve(d.data.teamList);
+                }, function (e) {
+                    defer.reject(e);
+                });
+                return defer.promise;
+            }
+        },
+        controller: 'teamCtrl'
+    });
 
 
 

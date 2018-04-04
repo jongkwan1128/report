@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 50px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,53 +7,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" ui-sref="{{routeName.DEPARTMENT_LIST}}" href="#">AAA</a>
+                <a class="nav-link" ui-sref="{{routeName.USER}}" href="#">U</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" ui-sref="{{routeName.PROJECT_LIST}}" href="#">BBB</a>
+                <a class="nav-link" ui-sref="{{routeName.DEPARTMENT}}" href="#">D</a>
             </li>
-            <!--<li class="nav-item dropdown">-->
-                <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                    <!--Dropdown-->
-                <!--</a>-->
-                <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-                    <!--<a class="dropdown-item" ui-sref="{{ routeName.TEST }}" href="#">Action</a>-->
-                    <!--<a class="dropdown-item" href="#">Another action</a>-->
-                    <!--<div class="dropdown-divider"></div>-->
-                    <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                <!--</div>-->
-            <!--</li>-->
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link disabled" href="#">Disabled</a>-->
-            <!--</li>-->
+            <li class="nav-item">
+                <a class="nav-link" ui-sref="{{routeName.TEAM}}" href="#">T</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" ui-sref="{{routeName.PROJECT}}" href="#">P</a>
+            </li>
         </ul>
-        <!--<form class="form-inline my-2 my-lg-0">-->
-            <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-            <span class="navbar-text" style="margin-right: 10px;">
+        <span class="navbar-text" style="margin-right: 10px;">
                 {{user.name}}
             </span>
-            <button class="btn btn-sm btn-outline-info" type="submit" ng-click="doLogout(user)">Logout</button>
-        <!--</form>-->
+        <button class="btn btn-sm btn-outline-info" type="submit" ng-click="doLogout(user)">Logout</button>
     </div>
 </nav>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-1">
-            side nav
-
-            <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">a</a>
-                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">B</a>
-                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">c</a>
-                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">d</a>
-            </div>
-
-        </div>
-        <div class="col-md-11">
-            <div ui-view></div>
-        </div>
-
-    </div>
-
+    <div ui-view></div>
 </div>
