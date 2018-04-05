@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-auto-increment');
 
 const TeamSchema = new Schema({
     teamNum: {
@@ -24,3 +25,5 @@ const TeamSchema = new Schema({
 });
 
 module.exports = mongoose.model('Team', TeamSchema);
+autoIncrement.initialize(mongoose.connection);
+TeamSchema.plugin(autoIncrement.plugin, { model: 'Teams', field: 'id', startAt: 1});

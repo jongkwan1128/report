@@ -4,13 +4,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
+
 const config = require('./config/config');
 
-// Set up Mongoose
-mongoose.connect(config.db, function () {
-	console.log(config.db + ' connected.');
+
+// autoIncrement.initialize(mongoose.connect(config.db));
+
+mongoose.connect(config.db);
+mongoose.connection.on('error', function () {
+	console.log('DB Connection Error.');
 });
-mongoose.Promise = global.Promise;
+mongoose.connection.once('open', function () {
+	console.log(config.db + ' connected.');
+	autoIncrement.initialize(mongoose);
+});
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +30,7 @@ app.use('/', require('./server/static'));
 
 app.use('/login', require('./server/api/login/loginCtrl'));
 app.use('/logout', require('./server/api/logout/logoutCtrl'));
+
 app.use('/user', require('./server/api/user/userCtrl'));
 
 app.use('/department', require('./server/api/department/departmentCtrl'));

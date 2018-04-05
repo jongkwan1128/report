@@ -4,6 +4,7 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-auto-increment');
 
 const UserSchema = new Schema({
     eNum: {
@@ -44,4 +45,7 @@ UserSchema.methods.validPassword = function (password) {
 	return bcrypt.compareSync(password, this.password);
 };
 
+
 module.exports = mongoose.model('User', UserSchema);
+autoIncrement.initialize(mongoose.connection);
+UserSchema.plugin(autoIncrement.plugin, { model: 'Users', field: 'id', startAt: 1});

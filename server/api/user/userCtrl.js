@@ -74,11 +74,12 @@ router.post('/', function (req, res, next) {
                 message: 'Created New User.',
                 user: {
                     eNum: user.eNum,
-                    id: user._id,
+                    id: user.id,
                     email: user.email,
                     name: user.name,
                     team: user.team,
-                    projects: user.projects
+                    projects: user.projects,
+                    _id: user._id
                 }
             });
         });

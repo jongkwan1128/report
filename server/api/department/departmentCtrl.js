@@ -29,7 +29,7 @@ router.get('/', function (req, res, next) {
         });
     }
 
-    Department.findById(id, (err, department) => {
+    Department.find({id: id}, (err, department) => {
         if (err) {
             return res.send({
                 success: false,
@@ -41,11 +41,12 @@ router.get('/', function (req, res, next) {
             success: true,
             message: 'Get One Department.',
             department: {
-                id: department._id,
+                id: department.id,
                 depNum: department.depNum,
                 name: department.name,
                 description: department.description,
-                createdAt: department.createdAt
+                createdAt: department.createdAt,
+                _id: department._id
             }
         });
     });
@@ -87,11 +88,12 @@ router.post('/', function (req, res, next) {
             success: true,
             message: 'Create New Department!',
             department: {
-                id: department._id,
+                id: department.id,
                 depNum: department.depNum,
                 name: department.name,
                 description: department.description,
-                createdAt: department.createdAt
+                createdAt: department.createdAt,
+                _id: department._id
             }
         });
     });
@@ -119,30 +121,35 @@ router.put('/', function (req, res, next) {
         });
     }
 
-    Department.findByIdAndUpdate(id, {
-        depNum: depNum,
-        name: name,
-        description: description
-    }, (err, department) => {
-        if (err) {
-            return res.send({
-                success: false,
-                message: 'Error: Server error.'
-            });
-        }
-
-        return res.send({
-            success: true,
-            message: 'Update One Department.',
-            department: {
-                id: department._id,
-                depNum: department.depNum,
-                name: department.name,
-                description: department.description,
-                createdAt: department.createdAt
+    Department.findOneAndUpdate(
+        {
+            id: id
+        },
+        {
+            depNum: depNum,
+            name: name,
+            description: description
+        }, (err, department) => {
+            if (err) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Server error.'
+                });
             }
+
+            return res.send({
+                success: true,
+                message: 'Update One Department.',
+                department: {
+                    id: department.id,
+                    depNum: department.depNum,
+                    name: department.name,
+                    description: department.description,
+                    createdAt: department.createdAt,
+                    _id: department._id,
+                }
+            });
         });
-    });
 });
 
 router.delete('/', function (req, res, next) {
@@ -156,7 +163,7 @@ router.delete('/', function (req, res, next) {
         });
     }
 
-    Department.findByIdAndRemove(id, (err, department) => {
+    Department.findOneAndRemove({id: id}, (err, department) => {
         if (err) {
             return res.send({
                 success: false,

@@ -55,13 +55,12 @@ angular.module('app').controller('departmentCtrl', function ($scope, $http, depa
     $scope.updateDepartment = function (department) {
         if (validationCheck(department)) {
             let params = {
-                id: department._id,
                 depNum: department.depNum,
                 name: department.name,
-                description: department.description
+                description: department.description,
             };
 
-            $http.put('/department?id' + department._id, params).then(function (d) {
+            $http.put('/department?id' + department.id, params).then(function (d) {
                 $scope.backUpData = {};
                 getDepartmentList();
             });
@@ -71,7 +70,7 @@ angular.module('app').controller('departmentCtrl', function ($scope, $http, depa
     };
 
     $scope.removeDepartment = function (department) {
-        $http.delete('/department?id=' + department._id).then(function (d) {
+        $http.delete('/department?id=' + department.id).then(function (d) {
             getDepartmentList();
         });
     };

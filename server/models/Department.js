@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-auto-increment');
 
 const DepartmentSchema = new Schema({
     depNum: {
@@ -21,3 +22,5 @@ const DepartmentSchema = new Schema({
 });
 
 module.exports = mongoose.model('Department', DepartmentSchema);
+autoIncrement.initialize(mongoose.connection);
+DepartmentSchema.plugin(autoIncrement.plugin, { model: 'Departments', field: 'id', startAt: 1});

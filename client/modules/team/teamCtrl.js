@@ -13,7 +13,7 @@ angular.module('app').controller('teamCtrl', function ($scope, $http, department
     let backUpData = {};
 
     $scope.setEmpty = function () {
-        $scope.team.department = departmentList[0]._id;
+        $scope.team.department = departmentList[0].id;
         $scope.team.teamNum = null;
         $scope.team.name = null;
         $scope.team.description = null;
@@ -64,14 +64,13 @@ console.log(params)
     $scope.updateTeam = function (team) {
         if (validationCheck(team)) {
             let params = {
-                id: team._id,
                 department: team.department,
                 teamNum: team.teamNum,
                 name: team.name,
                 description: team.description
             };
 
-            $http.put('/team?id' + team._id, params).then(function (d) {
+            $http.put('/team?id' + team.id, params).then(function (d) {
                 $scope.backUpData = {};
                 getTeamList();
             });
@@ -81,7 +80,7 @@ console.log(params)
     };
 
     $scope.removeTeam = function (team) {
-        $http.delete('/team?id=' + team._id).then(function (d) {
+        $http.delete('/team?id=' + team.id).then(function (d) {
             getTeamList();
         });
     };

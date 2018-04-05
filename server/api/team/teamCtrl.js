@@ -2,20 +2,6 @@ const Team = require('../../models/Team');
 const router = require('express').Router();
 
 router.get('/list', function (req, res, next) {
-    // Team.find({}, (err, teamList) => {
-    //     if (err) {
-    //         return res.send({
-    //             success: false,
-    //             message: 'Error: Server error.'
-    //         });
-    //     }
-    //
-    //     return res.send({
-    //         success: true,
-    //         message: 'Get Team List.',
-    //         teamList: teamList
-    //     });
-    // });
     Team.find({}).populate('department').exec(function (err, teamList) {
         if (err) {
             return res.send({
@@ -43,28 +29,7 @@ router.get('/', function (req, res, next) {
         });
     }
 
-    // Team.findById(id, (err, team) => {
-    //     if (err) {
-    //         return res.send({
-    //             success: false,
-    //             message: 'Error: Server error.'
-    //         });
-    //     }
-    //
-    //     return res.send({
-    //         success: true,
-    //         message: 'Get One Department.',
-    //         team: {
-    //             id: team._id,
-    //             department: team.department,
-    //             teamNum: team.teamNum,
-    //             name: team.name,
-    //             description: team.description,
-    //             createdAt: team.createdAt
-    //         }
-    //     });
-    // });
-    Team.find({_id: id}).populate('department').exec(function (err, team) {
+    Team.find({id: id}).populate('department').exec(function (err, team) {
         if (err) {
             return res.send({
                 success: false,
@@ -76,12 +41,13 @@ router.get('/', function (req, res, next) {
             success: true,
             message: 'Get One Department.',
             team: {
-                id: team._id,
+                id: team.id,
                 department: team.department,
                 teamNum: team.teamNum,
                 name: team.name,
                 description: team.description,
-                createdAt: team.createdAt
+                createdAt: team.createdAt,
+                _id: team._id,
             }
         });
     })
@@ -131,12 +97,13 @@ router.post('/', function (req, res, next) {
             success: true,
             message: 'Create New Team!',
             team: {
-                id: team._id,
+                id: team.id,
                 department: team.department,
                 teamNum: team.teamNum,
                 name: team.name,
                 description: team.description,
-                createdAt: team.createdAt
+                createdAt: team.createdAt,
+                _id: team._id,
             }
         });
     });
@@ -171,7 +138,7 @@ router.put('/', function (req, res, next) {
         });
     }
 
-    Team.findByIdAndUpdate(id, {
+    Team.findOneAndUpdate({id: id}, {
         department: department,
         teamNum: teamNum,
         name: name,
@@ -188,12 +155,13 @@ router.put('/', function (req, res, next) {
             success: true,
             message: 'Update One Team.',
             department: {
-                id: team._id,
+                id: team.id,
                 department: team.department,
                 teamNum: team.teamNum,
                 name: team.name,
                 description: team.description,
-                createdAt: team.createdAt
+                createdAt: team.createdAt,
+                _id: team._id,
             }
         });
     });
@@ -210,7 +178,7 @@ router.delete('/', function (req, res, next) {
         });
     }
 
-    Team.findByIdAndRemove(id, (err, team) => {
+    Team.findOneAndRemove({id: id}, (err, team) => {
         if (err) {
             return res.send({
                 success: false,
